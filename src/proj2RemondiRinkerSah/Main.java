@@ -74,23 +74,44 @@ public class Main extends Application {
     }
 
     @FXML
+    /**
+     * Safely exits the program without throwing an error
+     *
+     * @param event the event to trigger the exit.
+     */
     protected void handleExit(ActionEvent event) {
         System.exit(0);
     }
 
     @FXML
+    /**
+     * Stops the midi player
+     * For use in our stop button
+     *
+     * @param event the event which causes the midiplayer to stop
+     */
     protected void handleStopButtonAction(ActionEvent event) {
         stopMidi(); // maybe just put stopMidi body in here...
     }
 
     @FXML
+    /**
+     * Creates a dialog box prompting the user for the starting note
+     * for use in the midi player.
+     * Then calls the playMidi method using that note (Integer)
+     *
+     * @param event the event which should trigger the dialog box and midiplayer combo functionality.
+     */
     protected void handlePlayButtonAction(ActionEvent event) {
         int startNote = Integer.valueOf(createDialogBox("Starting Note", "Give Me A Starting Note", "60"));
         playMidi(startNote);
     }
 
     /**
-     * Initializes the midiplayer and sets up the stage with primary components
+     * Initializes the FXML using the built in loader
+     * Initializes the root scene of our GUI with the FXML elements
+     * Adds the titles and elements to our scene
+     * Returns an error message and closes if there is any issue setting up
      *
      * @param primaryStage Stage for main application
      */
