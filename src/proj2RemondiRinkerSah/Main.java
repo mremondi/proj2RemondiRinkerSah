@@ -41,26 +41,26 @@ public class Main extends Application {
      * @param defaultString the String value for the default text input field
      * @return              user input String
      */
-    public String createDialogBox(String title, String headerText, String defaultString) {
+    private Optional<String> createDialogBox(String title, String headerText, String defaultString) {
         TextInputDialog dialog = new TextInputDialog(defaultString);
         dialog.setTitle(title);
         dialog.setHeaderText(headerText);
 
         Optional<String> result = dialog.showAndWait();
-        return result.get();
+        return result;
     }
 
     /**
-     * Plays midi starting from the given value.
+     * Plays midi starting from the given value if it is between 0 and 115 otherwise it crashes
      *
      * @param startNote int value for starting note
      */
-    public void playMidi(int startNote){
+    private void playMidi(int startNote){
         System.out.println(this.midiPlayer);
         stopMidi();
         for (int i = 0; i < 8; i++) {
-            midiPlayer.addNote(Integer.valueOf(startNote) + i, VOLUME, i, 1, CHANNEL, 0);
-            midiPlayer.addNote(Integer.valueOf(startNote) + 7 - i, VOLUME, 7 + i, 1, CHANNEL, 0);
+            midiPlayer.addNote(startNote + i, VOLUME, i, 1, CHANNEL, 0);
+            midiPlayer.addNote(startNote + 7 - i, VOLUME, 7 + i, 1, CHANNEL, 0);
         }
         midiPlayer.play();
     }
@@ -68,7 +68,7 @@ public class Main extends Application {
     /**
      * Stops the midi player and clears its sequence
      */
-    public void stopMidi(){
+    private void stopMidi(){
         this.midiPlayer.stop();
         this.midiPlayer.clear();
     }
@@ -103,8 +103,12 @@ public class Main extends Application {
      * @param event the event which should trigger the dialog box and midiplayer combo functionality.
      */
     protected void handlePlayButtonAction(ActionEvent event) {
-        int startNote = Integer.valueOf(createDialogBox("Starting Note", "Give Me A Starting Note", "60"));
-        playMidi(startNote);
+        Optional<String> startNote = createDialogBox(
+                "Starting Note", "Give Me A Starting Note", "60");
+        if (startNote.isPresent()){
+            playMidi(Integer.valueOf(startNote.get()));
+        }
+
     }
 
     /**

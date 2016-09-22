@@ -12,12 +12,12 @@
     <center >
         <HBox styleClass="btnHbox" centerShape="true" >
             <children>
-                <Button  styleClass="btnPlay" mnemonicParsing="true" text="Play Scale" onAction="#handlePlayButtonAction" >
+                <Button  styleClass="btnPlay" text="Play Scale" onAction="#handlePlayButtonAction" >
                     <HBox.margin>
                         <Insets right="5.0" />
                     </HBox.margin>
                 </Button>
-                <Button styleClass="btnStop" mnemonicParsing="true" text="Stop Playing" scaleShape="true" onAction="#handleStopButtonAction" />
+                <Button styleClass="btnStop" text="Stop Playing" scaleShape="true" onAction="#handleStopButtonAction" />
             </children>
         </HBox>
     </center>
