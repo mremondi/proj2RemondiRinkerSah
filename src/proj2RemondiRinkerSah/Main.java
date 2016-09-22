@@ -41,7 +41,9 @@ public class Main extends Application {
      * @param defaultString the String value for the default text input field
      * @return              user input String
      */
-    private Optional<String> createDialogBox(String title, String headerText, String defaultString) {
+    private Optional<String> createDialogBox(
+            String title, String headerText, String defaultString
+    ) {
         TextInputDialog dialog = new TextInputDialog(defaultString);
         dialog.setTitle(title);
         dialog.setHeaderText(headerText);
@@ -56,11 +58,15 @@ public class Main extends Application {
      * @param startNote int value for starting note
      */
     private void playMidi(int startNote){
-        System.out.println(this.midiPlayer);
         stopMidi();
         for (int i = 0; i < 8; i++) {
-            midiPlayer.addNote(startNote + i, VOLUME, i, 1, CHANNEL, 0);
-            midiPlayer.addNote(startNote + 7 - i, VOLUME, 7 + i, 1, CHANNEL, 0);
+            midiPlayer.addNote(startNote, VOLUME, i, 1, CHANNEL, 0);
+            midiPlayer.addNote(startNote, VOLUME, 15 - i, 1, CHANNEL, 0);
+            if (i == 2 || i == 6) {
+                startNote += 1;
+            } else {
+                startNote += 2;
+            }
         }
         midiPlayer.play();
     }
